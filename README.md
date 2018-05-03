@@ -37,19 +37,19 @@ Output will look something like this.
 ```json
 [
   {
-    "meta": {
-      "name": "foo",
-      "description": "foo description",
-    },
-    "output": "<div class=\"foo\">this is my component</div>"
-  },
-  {
-    "meta" {
-      "name": "bar",
-      "description": "bar description"
-    },
-    "output": "<div class=\"beep\"><div class=\"foo\">this is my component</div></div><div style=\"max-width: 300px\"><div class=\"foo\">this is my component</div></div>"
-  }
+		"meta": {
+			"name": "foo",
+			"description": "foo description"
+		},
+		"output": "<div class=\"foo\">this is my component</div>"
+	},
+	{
+		"meta": {
+			"name": "bar",
+			"description": "bar description"
+		},
+		"output": "<div class=\"beep\"><div class=\"foo\">this is my component</div></div><div style=\"max-width: 300px\"><div class=\"foo\">this is my component</div></div>"
+	}
 ]
 ```
 
@@ -64,9 +64,9 @@ npm install gather-components
 var scraper = require('gather-components');
 
 scraper({
-    url: 'https://rawgit.com/EightMedia/design-manual-scraper/master/test/fixtures/',
-    paths: ['examples.html', 'capture.html', 'yaml.html'],
-    input: 'input.yaml',
+    url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
+    paths: ['test.html', 'test2.html'],
+    components: 'components.yaml',
     output: 'components.json',
     complete: function(components){}
 });
