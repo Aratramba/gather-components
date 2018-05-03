@@ -1,0 +1,20 @@
+-
+  name: foo
+  description: foo description
+  selectors: 
+    - .foo
+    - .foooo
+
+-
+  name: bar
+  description: bar description
+  selector: .bar
+  examples: 
+    - |
+      <div class="beep">
+        {{block}}
+      </div>
+    - |
+      <div style="max-width: 300px">
+        {{block}}
+      </div>

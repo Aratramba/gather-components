@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Test page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="foo">
+      foo  
+    </div>
+
+    <div></div>
+
+    <div class="bar">
+      bar
+    </div>
+
+    <div></div>
+
+    <div>
+      <div class="fooo">
+        fooo
+      </div>
+
+      <div></div>
+
+      <div class="foo">foo</div>
+    </div>
+  </div>
+
+  <script>
+    var $foo = document.createElement();
+    $foo.classList.add('foo');
+    $foo.innerText = 'foo';
+    document.body.appendChild($foo);
+  </script>
+</body>
+</html>
