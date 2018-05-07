@@ -1,0 +1,16 @@
+[
+	{
+		"meta": {
+			"name": "foo",
+			"description": "foo description"
+		},
+		"output": "<div class=\"foo\">\n      foo1\n    </div>\n<div class=\"foo\">foo3</div>\n<div class=\"fooo\">\n        foo2\n      </div>\n<div class=\"fooo\">foo5</div>"
+	},
+	{
+		"meta": {
+			"name": "bar",
+			"description": "bar description"
+		},
+		"output": "<div class=\"beep\">\n  <div class=\"bar\">\n      bar1\n    </div>\n</div>\n\n<div style=\"max-width: 300px\">\n  <div class=\"bar\">\n      bar1\n    </div>\n</div>\n\n<div class=\"beep\">\n  <div class=\"bar\">\n      bar2\n    </div>\n</div>\n\n<div style=\"max-width: 300px\">\n  <div class=\"bar\">\n      bar2\n    </div>\n</div>\n"
+	}
+]

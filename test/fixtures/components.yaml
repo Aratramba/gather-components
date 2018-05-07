@@ -3,7 +3,7 @@
   description: foo description
   selectors: 
     - .foo
-    - .foooo
+    - .fooo
 
 -
   name: bar

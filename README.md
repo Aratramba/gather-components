@@ -64,10 +64,11 @@ npm install gather-components
 var scraper = require('gather-components');
 
 scraper({
-    url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
-    paths: ['test.html', 'test2.html'],
-    components: 'components.yaml',
-    output: 'components.json',
-    complete: function(components){}
+  url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
+  paths: ['test.html', 'test2.html'],
+  components: 'components.yaml',
+  output: 'components.json'
+}).then((output) => {
+  console.log(output);
 });
 ```
