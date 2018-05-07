@@ -37,6 +37,11 @@ async function gatherComponents(componentsStore, htmlArray) {
         component.sources = [];
       }
 
+      // no selectors, do nothing
+      if (!component.selectors) {
+        return;
+      }
+
       // loop over selectors
       component.selectors.forEach((selector) => {
         $(selector).each((i, $el) => {
@@ -133,42 +138,75 @@ function scraper(options) {
       return reject(new Error(e));
     }
 
-    // const pages = await fetch(options.url, options.paths);
+    // validate input collection YAML
+    if (!Array.isArray(componentsStore) || !componentsStore.every(item => (item !== null && typeof item === 'object'))) {
+      return reject(new TypeError('Wrong YAML components format. Make sure top-level YAML is a collection with objects nested inside them.'));
+    }
+
+    // validate individual components YAML
+    const componentsDict = {};
+    componentsStore.forEach((component) => {
+
+      // must have a name
+      if (!component.name) {
+        return reject(new TypeError(`Component must have a name field: ${JSON.stringify(component)}`));
+      }
+
+      // must have a selector or selectors
+      if (!component.selector && !component.selectors) {
+        return reject(new TypeError(`Component must have a selector field: ${JSON.stringify(component)}`));
+      }
+
+      // selector must be a string
+      if (component.selector && typeof component.selector !== 'string') {
+        return reject(new TypeError(`Component selector field must be a string: ${JSON.stringify(component)}`));
+      }
+
+      // selectors must be an array
+      if (component.selectors && !Array.isArray(component.selectors)) {
+        return reject(new TypeError(`Component selectors field must be a collection: ${JSON.stringify(component)}`));
+      }
+
+      // must not have duplicate names
+      if (component.name in componentsDict) {
+        return reject(new TypeError(`Duplicate component names found: ${component.name}`));
+      }
+
+      componentsDict[component.name] = component;
+    });
+
+
+    // scrape all html sources
     const htmlArray = await request(settings.url, settings.paths, settings.fetchOptions);
+
+    // get components from html sources
     await gatherComponents(componentsStore, htmlArray);
+
+    // build examples for every component
     await buildExamples(componentsStore);
 
+    // generate output
     const output = componentsStore.map((component) => {
       return {
         meta: {
           name: component.name,
-          description: component.description,
+          description: component.description || '',
         },
         output: component.output.join('\n'),
       };
     });
 
+    // write json
     if (settings.output) {
       writeJsonFile(settings.output, output).then(() => {
         return resolve(output);
       });
+
+    // complete
     } else {
       return resolve(output);
     }
   });
 }
-
-
-// const settings = {
-//   url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
-//   paths: ['test.html', 'test2.html'],
-//   components: 'test/fixtures/components.yaml',
-//   output: 'components.json'
-// };
-// scraper(settings).then((output) => {
-//   console.log(output);
-// }).catch((err) => {
-//   console.log(err);
-// });
 
 module.exports = scraper;
