@@ -1,4 +1,4 @@
-# Gather Components `work in progress`
+# Gather Components
 Generate components.json file for [Design Manual](https://github.com/EightMedia/design-manual) capturing HTML components from a website by queryselector.
 
 

@@ -247,12 +247,3 @@ function scraper(options) {
 }
 
 module.exports = scraper;
-
-
-// scraper({
-//   url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
-//   paths: ['test.html', 'test2.html'],
-//   components: 'test/fixtures/components.yaml'
-// }).then((output) => {
-//   console.log(output);
-// });

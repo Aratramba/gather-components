@@ -1,6 +1,6 @@
 {
   "name": "gather-components",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Gathers components by scraping a website and stores them in a json file.",
   "main": "lib/index.js",
   "scripts": {
