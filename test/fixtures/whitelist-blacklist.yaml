@@ -1,0 +1,7 @@
+-
+  name: foo
+  selector: foo
+  blacklist: 
+    - foo.html
+  whitelist:
+    - foo.html

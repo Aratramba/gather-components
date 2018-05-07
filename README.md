@@ -28,6 +28,37 @@ Setup a YAML file with a list of components to be gathered. Add a name, descript
       </div>
 ```
 
+### Include or exclude pages per component
+You can include or exclude component capture per page. Make sure the page name is indentical to the path specified in scraper options. Don't use both `blacklist` and `whitelist` at the same time.
+
+Prevent capture on test.html using `blacklist`:
+
+```yaml
+-
+  name: foo
+  description: foo description
+  selectors: 
+    - .foo
+    - .body > .foo
+  blacklist:
+    - test.html
+```
+
+Capture only on test.html using `whitelist`
+
+```yaml
+-
+  name: foo
+  description: foo description
+  selectors: 
+    - .foo
+    - .body > .foo
+  whitelist:
+    - test.html
+```
+
+
+
 ---
 
 

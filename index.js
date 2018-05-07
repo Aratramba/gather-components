@@ -11,9 +11,14 @@ const cheerio = require('cheerio');
  */
 
 async function request(url, paths, fetchOptions) {
-  return Promise.all(paths.map(async (path) => {
-    const response = await fetch(url + path, fetchOptions);
-    return response.text();
+  return Promise.all(paths.map(async (p) => {
+    const response = await fetch(url + p, fetchOptions);
+    const source = await response.text();
+
+    return {
+      path: p,
+      html: source,
+    };
   }));
 }
 
@@ -23,8 +28,8 @@ async function request(url, paths, fetchOptions) {
  */
 
 async function gatherComponents(componentsStore, htmlSources) {
-  return Promise.all(htmlSources.map((html) => {
-    const $ = cheerio.load(html);
+  return Promise.all(htmlSources.map((source) => {
+    const $ = cheerio.load(source.html);
 
     // loop over components
     componentsStore.map((component) => {
@@ -42,6 +47,25 @@ async function gatherComponents(componentsStore, htmlSources) {
         return;
       }
 
+      // exclude current page
+      if (component.blacklist) {
+        component.blacklist = component.blacklist.map(s => s.trim());
+
+        for (let i = 0, l = component.blacklist.length; i < l; ++i) {
+          if (component.blacklist[i] === source.path) {
+            return;
+          }
+        }
+      }
+
+      // include only certain pages
+      if (component.whitelist) {
+        component.whitelist = component.whitelist.map(s => s.trim());
+        if (!component.whitelist.includes(source.path)) {
+          return;
+        }
+      }
+
       // loop over selectors
       component.selectors.forEach((selector) => {
         $(selector).each((i, $el) => {
@@ -51,7 +75,6 @@ async function gatherComponents(componentsStore, htmlSources) {
     });
   }));
 }
-
 
 /**
  * Build examples
@@ -173,6 +196,21 @@ function scraper(options) {
       }
 
       componentsDict[component.name] = component;
+
+      // whitelist / blacklist fight
+      if (component.whitelist && component.blacklist) {
+        return reject(new TypeError(`Component whitelist and blacklist fields can not be used at the same time: ${JSON.stringify(component)}`));
+      }
+
+      // blacklist must be an array
+      if (component.blacklist && !Array.isArray(component.blacklist)) {
+        return reject(new TypeError(`Component blacklist field must be a collection: ${JSON.stringify(component)}`));
+      }
+
+      // whitelist must be an array
+      if (component.whitelist && !Array.isArray(component.whitelist)) {
+        return reject(new TypeError(`Component whitelist field must be a collection: ${JSON.stringify(component)}`));
+      }
     });
 
     // scrape all html sources
@@ -209,3 +247,12 @@ function scraper(options) {
 }
 
 module.exports = scraper;
+
+
+// scraper({
+//   url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
+//   paths: ['test.html', 'test2.html'],
+//   components: 'test/fixtures/components.yaml'
+// }).then((output) => {
+//   console.log(output);
+// });

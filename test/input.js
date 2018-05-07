@@ -47,3 +47,24 @@ test('duplicate names', async (t) => {
   const error = await t.throws(scraper(options));
   t.is(error.message.match('Duplicate component names found: foo').length, 1);
 });
+
+test('blacklist array', async (t) => {
+  const options = Object.assign({}, settings);
+  options.components = 'test/fixtures/invalid-blacklist.yaml';
+  const error = await t.throws(scraper(options));
+  t.is(error.message.match('Component blacklist field must be a collection').length, 1);
+});
+
+test('whitelist array', async (t) => {
+  const options = Object.assign({}, settings);
+  options.components = 'test/fixtures/invalid-whitelist.yaml';
+  const error = await t.throws(scraper(options));
+  t.is(error.message.match('Component whitelist field must be a collection').length, 1);
+});
+
+test('whitelist and blacklist', async (t) => {
+  const options = Object.assign({}, settings);
+  options.components = 'test/fixtures/whitelist-blacklist.yaml';
+  const error = await t.throws(scraper(options));
+  t.is(error.message.match('Component whitelist and blacklist fields can not be used at the same time').length, 1);
+});

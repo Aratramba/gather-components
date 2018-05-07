@@ -18,3 +18,21 @@
       <div style="max-width: 300px">
         {{block}}
       </div>
+
+-
+  name: foo2
+  description: foo components on test.html
+  selectors: 
+    - .foo
+    - .fooo
+  whitelist: 
+    - test.html
+
+-
+  name: foo3
+  description: foo components on test2.html
+  selectors: 
+    - .foo
+    - .fooo
+  blacklist: 
+    - test.html
