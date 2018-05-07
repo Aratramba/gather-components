@@ -159,16 +159,16 @@ function scraper(options) {
 }
 
 
-const settings = {
-  url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
-  paths: ['test.html', 'test2.html'],
-  components: 'test/fixtures/components.yaml',
-  output: 'components.json'
-};
-scraper(settings).then((output) => {
-  console.log(output);
-}).catch((err) => {
-  console.log(err);
-});
+// const settings = {
+//   url: 'https://rawgit.com/EightMedia/gather-components/master/test/fixtures/',
+//   paths: ['test.html', 'test2.html'],
+//   components: 'test/fixtures/components.yaml',
+//   output: 'components.json'
+// };
+// scraper(settings).then((output) => {
+//   console.log(output);
+// }).catch((err) => {
+//   console.log(err);
+// });
 
 module.exports = scraper;

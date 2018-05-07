@@ -4,7 +4,7 @@
 			"name": "foo",
 			"description": "foo description"
 		},
-		"output": "<div class=\"foo\">\n      foo1\n    </div>\n<div class=\"foo\">foo3</div>\n<div class=\"fooo\">\n        foo2\n      </div>\n<div class=\"fooo\">foo5</div>"
+		"output": "<div class=\"foo\">\n      foo1\n    </div>\n<div class=\"foo\">foo3</div>\n<div class=\"fooo\">\n        foo2\n      </div>\n<div class=\"fooo\">foo4</div>"
 	},
 	{
 		"meta": {
