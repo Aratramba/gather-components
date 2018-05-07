@@ -22,8 +22,8 @@ async function request(url, paths, fetchOptions) {
  * Gather components
  */
 
-async function gatherComponents(componentsStore, htmlArray) {
-  return Promise.all(htmlArray.map((html) => {
+async function gatherComponents(componentsStore, htmlSources) {
+  return Promise.all(htmlSources.map((html) => {
     const $ = cheerio.load(html);
 
     // loop over components
@@ -175,12 +175,11 @@ function scraper(options) {
       componentsDict[component.name] = component;
     });
 
-
     // scrape all html sources
-    const htmlArray = await request(settings.url, settings.paths, settings.fetchOptions);
+    const htmlSources = await request(settings.url, settings.paths, settings.fetchOptions);
 
     // get components from html sources
-    await gatherComponents(componentsStore, htmlArray);
+    await gatherComponents(componentsStore, htmlSources);
 
     // build examples for every component
     await buildExamples(componentsStore);
